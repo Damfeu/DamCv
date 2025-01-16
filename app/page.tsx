@@ -2,7 +2,7 @@
 import { Eye, RotateCw, Save } from "lucide-react";
 import Image from "next/image";
 import PersonalDetailForm from "./components/PersonalDetailForm";
-import { use, useEffect, useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import {
   Education,
   Experience,
@@ -112,7 +112,8 @@ export default function Home() {
   const handelResetLanguages = () => setLanguages([]);
   const handelResetSkills = () => setSkills([]);
   const handelResetHobbies = () => setHobbies([]);
-  const cvPreviewRef = useRef(null);
+  // const cvPreviewRef = useRef(null);
+  const cvPreviewRef = useRef<HTMLDivElement | null>(null);
 
   const handleDownloadPdf = async () => {
     const element = cvPreviewRef.current;

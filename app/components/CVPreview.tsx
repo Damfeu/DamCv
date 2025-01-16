@@ -27,7 +27,7 @@ type Props = {
   hobbies: Hobby[];
   skills: Skill[];
   download?: boolean;
-  ref?: any;
+  ref?: React.RefObject<HTMLDivElement>;
 };
 
 function formatDate(dateString: string): string {
@@ -36,7 +36,7 @@ function formatDate(dateString: string): string {
   return date.toLocaleDateString("fr-FR", options);
 }
 
-// Cette partie permet de donner le nombre d'etoile en fonction du niveau de la lange choisiee
+// Cette partie permet de donner le nombre d'etoile en fonction du niveau de la langue choisie
 const getStarRating = (proficiency: string) => {
   const maxStars = 5;
   let filledStars = 0;
@@ -57,7 +57,7 @@ const getStarRating = (proficiency: string) => {
   return (
     <>
       {Array.from({ length: filledStars }, (_, index) => (
-        <Star key={index} className={`text-primary `} />
+        <Star key={index} className="text-primary" />
       ))}
       {Array.from({ length: maxStars - filledStars }, (_, index) => (
         <Star key={index + filledStars} className="text-gray-300" />
@@ -80,8 +80,9 @@ const CVPreview: React.FC<Props> = ({
 }) => {
   return (
     <div
-    ref= {ref} className={` flex p-16 w-[950px] h-[1200px] shadow-lg ${download ? 'mb-10' : ''}`}
-    data-theme={theme}
+      ref={ref}
+      className={`flex p-16 w-[950px] h-[1200px] shadow-lg ${download ? "mb-10" : ""}`}
+      data-theme={theme}
     >
       <div className="flex flex-col w-1/3">
         {/* la div qui contient l'image */}
@@ -161,12 +162,8 @@ const CVPreview: React.FC<Props> = ({
             <h1 className="uppercase font-bold my-2">Langues</h1>
             {languages.map((lang, index) => (
               <div key={index}>
-                <span className="Capitalize font-semibold">
-                  {lang.language}
-                </span>
-                <div className="flex mt-2">
-                  {getStarRating(lang.proficiency)}
-                </div>
+                <span className="capitalize font-semibold">{lang.language}</span>
+                <div className="flex mt-2">{getStarRating(lang.proficiency)}</div>
               </div>
             ))}
           </div>
@@ -175,30 +172,26 @@ const CVPreview: React.FC<Props> = ({
             <h1 className="uppercase font-bold my-2">Hobies</h1>
             {hobbies.map((hobby, index) => (
               <div key={index}>
-                
                 <span> {hobby.name} </span>
               </div>
             ))}
           </div>
-
         </div>
       </div>
 
       <div className="w-2/3 ml-8">
         <div className="w-full flex flex-col space-y-4">
           <h1 className="uppercase text-xl">{personalDetails.fullName}</h1>
-          <h2 className="uppercarse text-5xl text-primary font-bold">
+          <h2 className="uppercase text-5xl text-primary font-bold">
             {personalDetails.postSeeking}
           </h2>
-          <p className="break-all w-full text-sm">
-            {personalDetails.description}
-          </p>
+          <p className="break-all w-full text-sm">{personalDetails.description}</p>
         </div>
-        {/* C'est cette section qui affiche les experiences et leurs détailles  */}
+
+        {/* C'est cette section qui affiche les experiences et leurs détails  */}
         <section className="w-full h-fit p-5">
-          {/* Ces cette dive qui affiches les detailels des experiences  */}
           <div>
-            <h1 className="uppercase font-bold mb-2">Experiences</h1>
+            <h1 className="uppercase font-bold mb-2">Expériences</h1>
 
             <ul className="steps steps-vertical space-y-3">
               {experiences.map((exp, index) => (
@@ -211,13 +204,9 @@ const CVPreview: React.FC<Props> = ({
                     </h2>
 
                     <div className="text-sm my-2">
-                      <span className="badge badge-primary">
-                        {exp.companyName}
-                      </span>
-
+                      <span className="badge badge-primary">{exp.companyName}</span>
                       <span className="italic ml-2 ">
-                        {formatDate(exp.startDate)} au
-                        {formatDate(exp.endDate)}
+                        {formatDate(exp.startDate)} au {formatDate(exp.endDate)}
                       </span>
                     </div>
 
@@ -243,10 +232,8 @@ const CVPreview: React.FC<Props> = ({
 
                     <div className="text-sm my-2">
                       <span className="badge badge-primary">{edu.school}</span>
-
                       <span className="italic ml-2 ">
-                        {formatDate(edu.startDate)} au
-                        {formatDate(edu.endDate)}
+                        {formatDate(edu.startDate)} au {formatDate(edu.endDate)}
                       </span>
                     </div>
 
